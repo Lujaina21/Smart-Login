@@ -5,7 +5,9 @@ var passInput = document.querySelector("#passInput");
 var emailError = document.querySelector("#emailError");
 var passError = document.querySelector("#passError");
 var alertMsg = document.querySelector("#alertMsg");
+var usersList;
 
+//getFromLocalStorage();
 //// ********** Sign Up page **********
 signUp.addEventListener("click", function () {
   window.location = "./pages/signup.html";
@@ -13,7 +15,14 @@ signUp.addEventListener("click", function () {
 
 // ********** Validations **********
 function emailValidation() {
-  var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (emailInput.value == "") {
+    emailInput.classList.add("is-invalid");
+    emailInput.classList.remove("is-valid");
+    emailError.classList.replace("d-none", "d-block");
+    // emailError.textContent = "Email cannot be empty.";
+    return false;
+  }
+  var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/;
   if (emailRegex.test(emailInput.value)) {
     emailInput.classList.add("is-valid");
     emailInput.classList.remove("is-invalid");
@@ -29,6 +38,12 @@ function emailValidation() {
 emailInput.addEventListener("input", emailValidation);
 
 function passValidation() {
+  if (passInput.value == "") {
+    passInput.classList.add("is-invalid");
+    passInput.classList.remove("is-valid");
+    passError.classList.replace("d-none", "d-block");
+    return false;
+  }
   var passRegex = /^.{8,}$/;
   if (passRegex.test(passInput.value)) {
     passInput.classList.add("is-valid");
@@ -45,41 +60,70 @@ function passValidation() {
 passInput.addEventListener("input", passValidation);
 
 // ********** Local Storage **********
-//get data from local storage
-var usersList;
-if (localStorage.getItem("Users List")) {
-  usersList = JSON.parse(localStorage.getItem("Users List"));
-  console.log(usersList);
-} else {
-  usersList = [];
+function getFromLocalStorage() {
+  usersList = JSON.parse(localStorage.getItem("Users List")) || [];
 }
 
-//fn. to save logged-in user to local storage
-function saveToLocalStorage() {
-  localStorage.setItem("Users List", JSON.stringify(usersList));
-  console.log(localStorage);
-}
+// function saveToLocalStorage() {
+//   localStorage.setItem("Users List", JSON.stringify(usersList));
+//   console.log(localStorage);
+// }
 
 // ********** Validate on Users Credentials **********
+// function usersCredentials(email, pass) {
+//   for (let i = 0; i < usersList.length; i++) {
+//     if (usersList[i].email === email && usersList[i].password === pass) {
+//       alertMsg.innerHTML = `<p class="text-success">Success</p>`;
+//       return usersList[i];
+//     }
+//   }
+//   alertMsg.innerHTML = `<p class="text-danger">Invalid Entry</p>`;
+//   return null;
+// }
+
 function usersCredentials(email, pass) {
   for (let i = 0; i < usersList.length; i++) {
-    if (usersList[i].email === email && usersList[i].password === pass) {
-      alertMsg.innerHTML = `<p class="text-success">Success</p>`;
-      return usersList[i];
+    if (usersList[i].email === email) {
+      if (usersList[i].password === pass) {
+        alertMsg.innerHTML = `<p class="text-success">Success :)</p>`;
+        return usersList[i];
+      } else {
+        alertMsg.innerHTML = `<p class="text-danger">Incorrect password</p>`;
+        return null;
+      }
     }
   }
-  alertMsg.innerHTML = `<p class="text-danger">Invalid Entry</p>`;
+  alertMsg.innerHTML = `<p class="text-danger">Email not found!</p>`;
   return null;
 }
 
-// ********** Sign In button **********
-signIn.addEventListener("click", function () {
+// ********** Log In function **********
+function logIn() {
+  getFromLocalStorage();
+  if (!emailValidation() || !passValidation()) {
+    alertMsg.innerHTML = `<p class="text-danger">Please fill in all fields correctly</p>`;
+    return;
+  }
   var user = usersCredentials(emailInput.value, passInput.value);
   if (!user) {
-    //console.log("User not found");
+    console.log("User not found");
     return;
   }
   console.log("User found");
-  localStorage.setItem("User", JSON.stringify(user));
+  localStorage.setItem("loggedInUser", JSON.stringify(user));
+  //   localStorage.setItem("loggedInUser", JSON.stringify({ name: user.name }));
   location.assign("./pages/home.html");
+  clearInputs();
+}
+
+// ********** Sign In button **********
+signIn.addEventListener("click", function (event) {
+  event.preventDefault();
+  getFromLocalStorage();
+  logIn();
 });
+
+function clearInputs() {
+  emailInput.value = "";
+  passInput.value = "";
+}
