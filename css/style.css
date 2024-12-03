@@ -169,7 +169,6 @@ body {
 }
 
 .field input {
-  width: 100%;
   padding-left: 45px;
   font-size: 18px;
   outline: none;
@@ -181,35 +180,11 @@ body {
   box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
 }
 
-.field input:focus ~ label {
-  -webkit-box-shadow: inset 2px 2px 5px #babecc, inset -1px -1px 2px #ffffff73;
-  box-shadow: inset 2px 2px 5px #babecc, inset -1px -1px 2px #ffffff73;
-}
-
 .field span {
   position: absolute;
-  width: 50px;
   line-height: 50px;
   color: #595959;
   left: 5%;
-}
-
-.field label {
-  position: absolute;
-  top: 50%;
-  left: 45px;
-  pointer-events: none;
-  color: #666666;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  -webkit-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-
-.field input:focus ~ label {
-  opacity: 0;
 }
 
 button {
@@ -232,6 +207,10 @@ button {
 button:focus {
   -webkit-box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
   box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+}
+
+.form-footer p span {
+  cursor: pointer;
 }
 
 /*! Responsive Design */
