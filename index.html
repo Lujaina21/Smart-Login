@@ -43,20 +43,35 @@
           </div>
           <div class="field d-flex position-relative w-100 mb-4">
             <span class="fa fa-envelope"></span>
-            <input type="email" required />
-            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              class="w-100"
+              id="emailInput"
+            />
+          </div>
+          <div id="emailError" class="d-none ps-3 text-danger">
+            <p>Your email is missing (@) or (.com)</p>
           </div>
           <div class="field d-flex position-relative w-100 mb-2">
             <span class="fa fa-key"></span>
-            <input type="password" required />
-            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              class="w-100"
+              id="passInput"
+            />
           </div>
-          <button class="text-center border-0 z-1">Log In</button>
+          <div id="passError" class="d-none ps-3 text-danger">
+            <p>Password must be at-least 8 characters</p>
+          </div>
+          <div id="alertMsg"></div>
+          <button id="signIn" class="text-center border-0 z-1">Log In</button>
           <div class="form-footer mt-4 text-center">
             <p>
               Don't have an account?
-              <span class="fw-bolder fst-italic"
-                ><a href="./pages/signup.html">Sign Up</a></span
+              <span id="signUp" class="fw-bolder fst-italic text-secondary"
+                >Sign Up</span
               >
             </p>
           </div>
