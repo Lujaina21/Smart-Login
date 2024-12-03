@@ -13,6 +13,16 @@ signUp.addEventListener("click", function () {
   window.location = "./pages/signup.html";
 });
 
+// ********** Local Storage **********
+function getFromLocalStorage() {
+  if (localStorage.getItem("Users List")) {
+    usersList = JSON.parse(localStorage.getItem("Users List"));
+  } else {
+    usersList = [];
+  }
+}
+getFromLocalStorage();
+
 // ********** Validations **********
 function emailValidation() {
   if (emailInput.value == "") {
@@ -59,36 +69,15 @@ function passValidation() {
 }
 passInput.addEventListener("input", passValidation);
 
-// ********** Local Storage **********
-function getFromLocalStorage() {
-  usersList = JSON.parse(localStorage.getItem("Users List")) || [];
-}
-
-// function saveToLocalStorage() {
-//   localStorage.setItem("Users List", JSON.stringify(usersList));
-//   console.log(localStorage);
-// }
-
-// ********** Validate on Users Credentials **********
-// function usersCredentials(email, pass) {
-//   for (let i = 0; i < usersList.length; i++) {
-//     if (usersList[i].email === email && usersList[i].password === pass) {
-//       alertMsg.innerHTML = `<p class="text-success">Success</p>`;
-//       return usersList[i];
-//     }
-//   }
-//   alertMsg.innerHTML = `<p class="text-danger">Invalid Entry</p>`;
-//   return null;
-// }
-
+// ********** Validate if user exists **********
 function usersCredentials(email, pass) {
   for (let i = 0; i < usersList.length; i++) {
-    if (usersList[i].email === email) {
-      if (usersList[i].password === pass) {
+    if (usersList[i].userEmail === email) {
+      if (usersList[i].userPass === pass) {
         alertMsg.innerHTML = `<p class="text-success">Success :)</p>`;
         return usersList[i];
       } else {
-        alertMsg.innerHTML = `<p class="text-danger">Incorrect password</p>`;
+        alertMsg.innerHTML = `<p class="text-danger">Incorrect password </p>`;
         return null;
       }
     }
@@ -99,20 +88,19 @@ function usersCredentials(email, pass) {
 
 // ********** Log In function **********
 function logIn() {
-  getFromLocalStorage();
+  //getFromLocalStorage();
   if (!emailValidation() || !passValidation()) {
     alertMsg.innerHTML = `<p class="text-danger">Please fill in all fields correctly</p>`;
     return;
   }
-  var user = usersCredentials(emailInput.value, passInput.value);
-  if (!user) {
+  var loggedInUser = usersCredentials(emailInput.value, passInput.value);
+  if (!loggedInUser) {
     console.log("User not found");
     return;
   }
   console.log("User found");
-  localStorage.setItem("loggedInUser", JSON.stringify(user));
-  //   localStorage.setItem("loggedInUser", JSON.stringify({ name: user.name }));
-  location.assign("./pages/home.html");
+  localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+  location.assign("./pages/welcome.html");
   clearInputs();
 }
 
@@ -123,6 +111,7 @@ signIn.addEventListener("click", function (event) {
   logIn();
 });
 
+// ********** Clear Inputs **********
 function clearInputs() {
   emailInput.value = "";
   passInput.value = "";
