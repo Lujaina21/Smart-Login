@@ -43,25 +43,50 @@
           </div>
           <div class="field d-flex position-relative w-100 mb-4">
             <span class="fa fa-user"></span>
-            <input type="text" required />
-            <label>Name</label>
+            <input
+              type="text"
+              placeholder="Name"
+              id="nameInput"
+              class="w-100"
+              required
+            />
+          </div>
+          <div id="nameError" class="d-none ps-3 text-danger">
+            <p>Name must start with Capital Letter & at least 3 chars</p>
           </div>
           <div class="field d-flex position-relative w-100 mb-4">
             <span class="fa fa-envelope"></span>
-            <input type="email" required />
-            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              id="emailInput"
+              class="w-100"
+              required
+            />
+          </div>
+          <div id="emailError" class="d-none ps-3 text-danger">
+            <p>Your email is missing (@) or (.com)</p>
           </div>
           <div class="field d-flex position-relative w-100 mb-2">
             <span class="fa fa-key"></span>
-            <input type="password" required />
-            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              id="passInput"
+              class="w-100"
+              required
+            />
           </div>
-          <button class="text-center border-0 z-1">Sign Up</button>
+          <div id="passError" class="d-none ps-3 text-danger">
+            <p>Password must be at-least 8 characters</p>
+          </div>
+          <div id="alertMsg"></div>
+          <button id="signUp" class="text-center border-0 z-1">Sign Up</button>
           <div class="form-footer mt-4 text-center">
             <p>
               Have an account?
-              <span class="fw-bolder fst-italic"
-                ><a href="../index.html">Log In</a></span
+              <span id="logIn" class="fw-bolder fst-italic text-secondary"
+                >Log In</span
               >
             </p>
           </div>
@@ -70,6 +95,6 @@
     </div>
 
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../js/signup.js"></script>
   </body>
 </html>
